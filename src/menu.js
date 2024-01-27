@@ -32,7 +32,10 @@ export class ContextMenu extends Menu {
 
     this.menu.addEventListener('click', (event) => {
       event.stopPropagation()
-      ArrayOfModules.find(module => module.type === event.target.dataset.type).trigger()
+      ArrayOfModules.find(
+        (module) => module.type === event.target.dataset.type
+      ).trigger()
+      this.menu.classList.remove('open')
     })
   }
 
@@ -44,6 +47,8 @@ export class ContextMenu extends Menu {
 
   add() {
     this.menu.classList.add('open')
-    this.menu.innerHTML = ArrayOfModules.map((module) => module.toHTML()).join('')
+    this.menu.innerHTML = ArrayOfModules.map((module) => module.toHTML()).join(
+      ''
+    )
   }
 }
