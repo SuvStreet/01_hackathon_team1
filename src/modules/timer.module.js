@@ -1,5 +1,4 @@
-import {Module} from '../core/module'
+import { Module } from "../core/module";
 
-export class TimerModule extends Module {
-
-}
+export class TimerModule extends Module {}
+console.log("hello");
