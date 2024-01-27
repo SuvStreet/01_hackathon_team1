@@ -1,4 +1,4 @@
-import { Module } from "../core/module"
+import { Module } from '../core/module'
 //import { img } from "../assets/close.png";
 
 export class TimerModule extends Module {
@@ -17,22 +17,22 @@ export class TimerModule extends Module {
   checkContainer() {}
 
   createModal() {
-    const body = document.querySelector("body")
-    const newContainer = document.createElement("div")
-    newContainer.className = "container hidden"
-    newContainer.textContent = "Введите время для таймера"
+    const body = document.querySelector('body')
+    const newContainer = document.createElement('div')
+    newContainer.className = 'container hidden'
+    newContainer.textContent = 'Введите время для таймера'
     body.append(newContainer)
-    const form = document.createElement("form")
-    form.id = "input"
-    form.textContent = "Время (сек)"
-    const newInput = document.createElement("input")
-    newInput.className = "input-form"
-    newInput.name = "timerValue"
-    const newButton = document.createElement("div")
-    newButton.className = "btn"
-    const btn = document.createElement("button")
-    btn.type = "submit"
-    btn.textContent = "Старт"
+    const form = document.createElement('form')
+    form.id = 'input'
+    form.textContent = 'Время (сек)'
+    const newInput = document.createElement('input')
+    newInput.className = 'input-form'
+    newInput.name = 'timerValue'
+    const newButton = document.createElement('div')
+    newButton.className = 'btn'
+    const btn = document.createElement('button')
+    btn.type = 'submit'
+    btn.textContent = 'Старт'
     form.append(newInput)
     form.append(newButton)
     newContainer.append(form)
@@ -40,7 +40,7 @@ export class TimerModule extends Module {
   }
 
   removeModal() {
-    const removeModal = document.querySelector(".container")
+    const removeModal = document.querySelector('.container')
     //removeModal.className = "container hidden";
     if (removeModal) {
       removeModal.remove()
@@ -49,48 +49,48 @@ export class TimerModule extends Module {
   }
 
   showModal() {
-    const showModal = document.querySelector(".container")
-    showModal.className = "container"
+    const showModal = document.querySelector('.container')
+    showModal.className = 'container'
   }
 
   removeTimerModal() {
-    const removeTimerModal = document.querySelector(".timerModal")
+    const removeTimerModal = document.querySelector('.timerModal')
     if (removeTimerModal) {
-      removeTimerModal.className = "timerModal timerHiden"
+      removeTimerModal.className = 'timerModal timerHiden'
       removeTimerModal.remove()
     }
-    const removeTimerContainer = document.querySelector(".container")
+    const removeTimerContainer = document.querySelector('.container')
     if (removeTimerContainer) {
       removeTimerContainer.remove()
     }
   }
 
   showTimerModal() {
-    const body = document.querySelector("body")
-    const timerModal = document.createElement("div")
-    timerModal.className = "timerModal"
-    const timerText = document.createElement("div")
-    timerText.className = "modalText"
-    const closeBtn = document.createElement("img")
+    const body = document.querySelector('body')
+    const timerModal = document.createElement('div')
+    timerModal.className = 'timerModal'
+    const timerText = document.createElement('div')
+    timerText.className = 'modalText'
+    const closeBtn = document.createElement('img')
     closeBtn.src =
-      "https://flaticons.net/icon.php?slug_category=mobile-application&slug_icon=close"
-    closeBtn.className = "closeBtn"
+      'https://flaticons.net/icon.php?slug_category=mobile-application&slug_icon=close'
+    closeBtn.className = 'closeBtn'
     timerModal.append(closeBtn)
     timerModal.append(timerText)
     body.append(timerModal)
   }
 
   clickOnCloseBtn(timer) {
-    const closeBtn = document.querySelector(".closeBtn")
-    closeBtn.addEventListener("click", (event) => {
+    const closeBtn = document.querySelector('.closeBtn')
+    closeBtn.addEventListener('click', (event) => {
       this.clearTimer(timer)
       this.removeTimerModal()
       //this.showModal();
     })
   }
   run() {
-    const form = document.querySelector("form")
-    form.addEventListener("submit", (event) => {
+    const form = document.querySelector('form')
+    form.addEventListener('submit', (event) => {
       event.preventDefault()
       const timerValue = event.target.elements.timerValue.value
       timerValue.trim()
@@ -98,7 +98,7 @@ export class TimerModule extends Module {
         this.removeModal()
         this.getFormatedTime(timerValue)
         //timerValue.remove();
-      } else alert("Введите время!")
+      } else alert('Введите время!')
     })
   }
   getFormatedTime(timeValue) {
@@ -110,7 +110,7 @@ export class TimerModule extends Module {
 
   showFormatedTimer(minutes, seconds) {
     //this.clickOnCloseBtn();
-    const modalSeconds = document.querySelector(".modalText")
+    const modalSeconds = document.querySelector('.modalText')
     if (modalSeconds) {
       if (String(minutes).length >= 2) {
         if (String(seconds).length == 2) {
@@ -127,8 +127,8 @@ export class TimerModule extends Module {
   }
 
   showTimerEnd() {
-    const endTimer = document.querySelector(".modalText")
-    endTimer.textContent = "Таймер закончен!"
+    const endTimer = document.querySelector('.modalText')
+    endTimer.textContent = 'Таймер закончен!'
   }
 
   clearTimer(timer) {
