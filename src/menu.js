@@ -5,6 +5,7 @@ import { MessageModule } from './modules/message.module'
 import { ShapeModule } from './modules/shape.module'
 import { SoundModule } from './modules/sound.module'
 import { TimerModule } from './modules/timer.module'
+import { OwnModule } from './modules/own.module'
 
 const ArrayOfModules = [
   new BackgroundModule('background', 'Случайный фон'),
@@ -13,6 +14,7 @@ const ArrayOfModules = [
   new ShapeModule('shape', 'Фигуры'),
   new SoundModule('sound', 'Звуки'),
   new TimerModule('timer', 'Таймер'),
+  new OwnModule('own', 'Собственный модуль'),
 ]
 
 export class ContextMenu extends Menu {
