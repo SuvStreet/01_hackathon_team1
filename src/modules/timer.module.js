@@ -17,25 +17,33 @@ export class TimerModule extends Module {
   checkContainer() {}
 
   createModal() {
-    const body = document.querySelector('body')
-    const newContainer = document.createElement('div')
-    newContainer.className = 'container hidden'
-    newContainer.textContent = 'Введите время для таймера'
-    body.append(newContainer)
+    const container = document.querySelector('.container')
+
+    container.innerHTML = ''
+
+    const titleTimer = document.createElement('span')
+    titleTimer.classList.add('timer')
+    titleTimer.textContent = 'Введите время для таймера'
+    container.append(titleTimer)
+
     const form = document.createElement('form')
     form.id = 'input'
     form.textContent = 'Время (сек)'
+
     const newInput = document.createElement('input')
     newInput.className = 'input-form'
     newInput.name = 'timerValue'
+
     const newButton = document.createElement('div')
     newButton.className = 'btn'
+
     const btn = document.createElement('button')
     btn.type = 'submit'
     btn.textContent = 'Старт'
-    form.append(newInput)
-    form.append(newButton)
-    newContainer.append(form)
+
+    form.append(newInput, newButton)
+
+    titleTimer.append(form)
     newButton.append(btn)
   }
 
@@ -49,8 +57,9 @@ export class TimerModule extends Module {
   }
 
   showModal() {
-    const showModal = document.querySelector('.container')
-    showModal.className = 'container'
+    // const showModal = document.querySelector('.timer')
+
+    // showModal.className = 'timer container'
   }
 
   removeTimerModal() {
@@ -88,6 +97,7 @@ export class TimerModule extends Module {
       //this.showModal();
     })
   }
+
   run() {
     const form = document.querySelector('form')
     form.addEventListener('submit', (event) => {
@@ -101,6 +111,7 @@ export class TimerModule extends Module {
       } else alert('Введите время!')
     })
   }
+
   getFormatedTime(timeValue) {
     const getMinutes = Math.floor(timeValue / 60)
     const getSeconds = timeValue % 60
@@ -160,5 +171,8 @@ export class TimerModule extends Module {
       }
     }, 1000)
     this.clickOnCloseBtn(timer)
+
+    // document.querySelector('.container').innerHTML = 'Нажми на меня правой кнопкой мыши'
+    // document.querySelector('.container').classList.remove('timer')
   }
 }
