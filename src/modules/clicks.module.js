@@ -11,20 +11,27 @@ export class ClicksModule extends Module {
   }
 
   trigger() {
+    this.hideContainer()
+    this.usersInteractiv()
+  }
+
+  hideContainer() {
     this.clicks = document.querySelector('.clicks')
     this.clicks.innerHTML = ''
+  }
 
+  usersInteractiv() {
     const clicksContainer = document.createElement('div')
+
     clicksContainer.classList.add('clicksContainer')
     clicksContainer.textContent = 'Кликай быстрее'
     this.clicks.append(clicksContainer)
-
     this.counter(clicksContainer)
   }
 
   counter(clicksContainer) {
     clicksContainer.addEventListener('click', (event) => {
-      if(event.detail === 1) {
+      if (event.detail === 1) {
         this.oneClick += 1
       } else {
         this.oneClick -= 1
