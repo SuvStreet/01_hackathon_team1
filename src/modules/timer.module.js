@@ -1,20 +1,13 @@
 import { Module } from '../core/module'
-//import { img } from "../assets/close.png";
 
 export class TimerModule extends Module {
   trigger() {
-    //const removeTimerModal = document.querySelector(".timer");
-    // if (removeTimerModal) {
-    //   //removeTimerModal.className = "timerModal timerHiden";
-    //   removeTimerModal.remove();
-    //   this.removeModal();
-    //   this.clearTimer(timer);
-    // }
-    this.createModal()
-    this.showModal()
-    this.run()
+    const activeTimer = document.querySelector('.activeTimer')
+    if (!activeTimer) {
+      this.createModal()
+      this.run()
+    }
   }
-  checkContainer() {}
 
   createModal() {
     const container = document.querySelector('.container')
@@ -22,15 +15,15 @@ export class TimerModule extends Module {
     container.innerHTML = ''
 
     const titleTimer = document.createElement('span')
-    titleTimer.classList.add('timer')
+    titleTimer.classList.add('inputModal')
     titleTimer.textContent = 'Введите время для таймера'
-    container.append(titleTimer)
 
     const form = document.createElement('form')
     form.id = 'input'
     form.textContent = 'Время (сек)'
 
     const newInput = document.createElement('input')
+    newInput.type = 'number'
     newInput.className = 'input-form'
     newInput.name = 'timerValue'
 
@@ -42,85 +35,97 @@ export class TimerModule extends Module {
     btn.textContent = 'Старт'
 
     form.append(newInput, newButton)
-
-    titleTimer.append(form)
     newButton.append(btn)
-  }
-
-  removeModal() {
-    const removeModal = document.querySelector('.container')
-    //removeModal.className = "container hidden";
-    if (removeModal) {
-      removeModal.remove()
-      this.removeTimerModal()
-    }
-  }
-
-  showModal() {
-    // const showModal = document.querySelector('.timer')
-
-    // showModal.className = 'timer container'
-  }
-
-  removeTimerModal() {
-    const removeTimerModal = document.querySelector('.timerModal')
-    if (removeTimerModal) {
-      removeTimerModal.className = 'timerModal timerHiden'
-      removeTimerModal.remove()
-    }
-    const removeTimerContainer = document.querySelector('.container')
-    if (removeTimerContainer) {
-      removeTimerContainer.remove()
-    }
-  }
-
-  showTimerModal() {
-    const body = document.querySelector('body')
-    const timerModal = document.createElement('div')
-    timerModal.className = 'timerModal'
-    const timerText = document.createElement('div')
-    timerText.className = 'modalText'
-    const closeBtn = document.createElement('img')
-    closeBtn.src =
-      'https://flaticons.net/icon.php?slug_category=mobile-application&slug_icon=close'
-    closeBtn.className = 'closeBtn'
-    timerModal.append(closeBtn)
-    timerModal.append(timerText)
-    body.append(timerModal)
-  }
-
-  clickOnCloseBtn(timer) {
-    const closeBtn = document.querySelector('.closeBtn')
-    closeBtn.addEventListener('click', (event) => {
-      this.clearTimer(timer)
-      this.removeTimerModal()
-      //this.showModal();
-    })
+    titleTimer.append(form)
+    container.append(titleTimer)
   }
 
   run() {
     const form = document.querySelector('form')
     form.addEventListener('submit', (event) => {
       event.preventDefault()
+      
       const timerValue = event.target.elements.timerValue.value
-      timerValue.trim()
-      if (timerValue.length) {
+
+      if (timerValue > 0) {
         this.removeModal()
         this.getFormatedTime(timerValue)
-        //timerValue.remove();
       } else alert('Введите время!')
     })
   }
 
+  removeModal() {
+    const removeModal = document.querySelector('.inputModal')
+    if (removeModal) {
+      removeModal.remove()
+    }
+  }
+
   getFormatedTime(timeValue) {
-    const getMinutes = Math.floor(timeValue / 60)
-    const getSeconds = timeValue % 60
-    this.showTimerModal()
+    let getMinutes = 0
+    let getSeconds = 0
+
+    if (timeValue < 60) {
+      getMinutes = 0
+      getSeconds = timeValue
+    } else {
+      getMinutes = Math.floor(timeValue / 60)
+      getSeconds = timeValue % 60
+    }
+
+    this.showActiveTimer()
     this.startTimer(getMinutes, getSeconds)
   }
 
+  showActiveTimer() {
+    const container = document.querySelector('.container')
+
+    const activeTimer = document.createElement('div')
+    activeTimer.classList.add('activeTimer')
+
+    const timerText = document.createElement('div')
+    timerText.className = 'modalText'
+
+    const closeBtn = document.createElement('img')
+    closeBtn.src =
+      'https://flaticons.net/icon.php?slug_category=mobile-application&slug_icon=close'
+    closeBtn.className = 'closeBtn'
+
+    activeTimer.append(closeBtn, timerText)
+    container.append(activeTimer)
+  }
+
+  startTimer(minutes, seconds) {
+    this.showFormatedTimer(minutes, seconds)
+
+    const timer = setInterval(() => {
+      if (minutes > 0) {
+        if (seconds > 0) {
+          seconds -= 1
+          this.showFormatedTimer(minutes, seconds)
+        } else {
+          minutes -= 1
+          seconds += 59
+          seconds -= 1
+          this.showFormatedTimer(minutes, seconds)
+        }
+      } else if (seconds > 0) {
+        seconds -= 1
+        this.showFormatedTimer(minutes, seconds)
+      } else {
+        this.clearTimer(timer)
+        this.showTimerEnd()
+
+        setTimeout(() => {
+          this.removeActiveTimer()
+        }, 3000)
+      }
+    }, 1000)
+
+    this.clickOnCloseBtn(timer)
+  }
+
   showFormatedTimer(minutes, seconds) {
-    //this.clickOnCloseBtn();
     const modalSeconds = document.querySelector('.modalText')
     if (modalSeconds) {
       if (String(minutes).length >= 2) {
@@ -137,42 +142,29 @@ export class TimerModule extends Module {
     }
   }
 
+  clearTimer(timer) {
+    clearInterval(timer)
+  }
+
   showTimerEnd() {
     const endTimer = document.querySelector('.modalText')
     endTimer.textContent = 'Таймер закончен!'
   }
 
-  clearTimer(timer) {
-    clearInterval(timer)
+  removeActiveTimer() {
+    const removeActiveTimer = document.querySelector('.activeTimer')
+
+    removeActiveTimer.remove()
+    document.querySelector('.container').innerHTML =
+      'Нажми на меня правой кнопкой мыши'
+    document.querySelector('.container').classList.remove('timer')
   }
 
-  startTimer(minutes, seconds) {
-    const timer = setInterval(() => {
-      if (minutes > 0) {
-        if (seconds > 0) {
-          this.showFormatedTimer(minutes, seconds)
-          seconds -= 1
-        } else {
-          minutes -= 1
-          seconds += 59
-          this.showFormatedTimer(minutes, seconds)
-          seconds -= 1
-        }
-      } else if (seconds > 0) {
-        this.showFormatedTimer(minutes, seconds)
-        seconds -= 1
-      } else {
-        this.showFormatedTimer(minutes, seconds)
-        this.showTimerEnd()
-        setTimeout(() => {
-          this.removeTimerModal()
-        }, 3000)
-        this.clearTimer(timer)
-      }
-    }, 1000)
-    this.clickOnCloseBtn(timer)
-
-    // document.querySelector('.container').innerHTML = 'Нажми на меня правой кнопкой мыши'
-    // document.querySelector('.container').classList.remove('timer')
+  clickOnCloseBtn(timer) {
+    const closeBtn = document.querySelector('.closeBtn')
+    closeBtn.addEventListener('click', () => {
+      this.clearTimer(timer)
+      this.removeActiveTimer()
+    })
   }
 }
