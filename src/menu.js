@@ -27,26 +27,30 @@ export class ContextMenu extends Menu {
       this.menu.style.top = `${event.clientY}px`
       this.menu.style.left = `${event.clientX}px`
       this.add()
-			this.close()
+      this.close()
     })
 
     this.menu.addEventListener('click', (event) => {
       event.stopPropagation()
 
-      document
-        .querySelector('.container')
-        .classList.add(event.target.dataset.type)
+      const container = document.querySelector('.container')
 
-      ArrayOfModules.find(
-        (module) => module.type === event.target.dataset.type
-      ).trigger()
+      if (!container.classList.contains('timer') && !container.classList.contains('message') && !container.classList.contains('clicks')) {
+        document
+          .querySelector('.container')
+          .classList.add(event.target.dataset.type)
+
+        ArrayOfModules.find(
+          (module) => module.type === event.target.dataset.type
+        ).trigger()
+      }
 
       this.menu.classList.remove('open')
     })
   }
 
   close() {
-		this.el.addEventListener('click', () => {
+    this.el.addEventListener('click', () => {
       this.menu.classList.remove('open')
     })
   }
