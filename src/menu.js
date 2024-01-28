@@ -32,12 +32,15 @@ export class ContextMenu extends Menu {
 
     this.menu.addEventListener('click', (event) => {
       event.stopPropagation()
+
       document
         .querySelector('.container')
         .classList.add(event.target.dataset.type)
+
       ArrayOfModules.find(
         (module) => module.type === event.target.dataset.type
       ).trigger()
+
       this.menu.classList.remove('open')
     })
   }

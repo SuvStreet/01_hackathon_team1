@@ -1,65 +1,43 @@
-import { Module } from "../core/module";
-import { random } from "../utils";
+import { Module } from '../core/module'
+import { random } from '../utils'
 
 export class ShapeModule extends Module {
-  constructor(type, text) {
-    super(type, text);
-
-    this.container = document.createElement("div");
-    this.container.classList.add("container");
-  }
-
   trigger() {
-    this.render();
+    this.container = document.querySelector('.container')
+    this.container.innerHTML = ''
+    this.createShape(this.container)
   }
 
-  render() {
-    let randomColor = `rgb(${random(0, 255)}, ${random(0, 255)}, ${random(
-      0,
-      255
-    )})`;
-
-    this.container = document.querySelector(".container");
-    this.container.innerHTML = "";
-    // this.container.className = "";
-
-    this.createShape(this.container);
-    // setTimeout(() => {
-    //   this.container.innerHTML = 'Нажми на меня правой кнопкой мыши'
-    //   this.container.classList.remove()
-    // }, 2000)
-  }
-
-  createShape() {
+  createShape(container) {
     const shapes = [
-      "square",
-      "rectangle",
-      "circle",
-      "oval",
-      "triangle-up",
-      "triangle-down",
-      "triangle-left",
-      "triangle-right",
-      "pacman",
-      "infinity",
-      "moon",
-      "yin-yang",
-      "star-five",
-      "trapezoid",
-      "parallelogram",
-      "star-six",
-      "heart",
-    ];
+      'square',
+      'rectangle',
+      'circle',
+      'oval',
+      'parallelogram',
+    ]
+
+    const shape = shapes[random(0, shapes.length - 1)]
 
     const newShape = document.createElement('div')
-    newShape.classList.add(shapes[random(0, shapes.length - 1)]);
-    newShape.style.position = `absolute`;
+    newShape.classList.add(shape)
+    newShape.style.position = `relative`
+    newShape.style.width = `${random(50, 200)}px`
+    newShape.style.height = `${random(50, 200)}px`
+    newShape.style.backgroundColor = `rgb(${random(0, 255)}, ${random(0, 255)}, ${random(0, 255)})`
 
-    const windowInnerWidth = window.innerWidth;
-    const windowInnerHeight = window.innerHeight;
-    newShape.style.top = `${random(0, windowInnerHeight)}px`;
-    newShape.style.right = `${random(0, windowInnerWidth)}px`;
+    const shapeWidth = document.querySelector('.shape').offsetWidth
+    const shapeHeight = document.querySelector('.shape').offsetHeight
 
-    document.body.append(newShape);
+    newShape.style.top = `${random(
+      -(shapeHeight - newShape.offsetHeight) / 2,
+      (shapeHeight - newShape.offsetHeight) / 2
+    )}px`
+    newShape.style.right = `${random(
+      -(shapeWidth - newShape.offsetWidth) / 2,
+      (shapeWidth - newShape.offsetWidth) / 2
+    )}px`
+
+    container.append(newShape)
   }
 }
