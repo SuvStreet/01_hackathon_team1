@@ -10,9 +10,27 @@ export class ShapeModule extends Module {
   }
 
   trigger() {
-    let randomColor = `rgb(${random(0, 255)}, ${random(0, 255)}, ${random(0, 255)})`;
+    this.render();
+  }
 
-    this.container.className = "";
+  render() {
+    let randomColor = `rgb(${random(0, 255)}, ${random(0, 255)}, ${random(
+      0,
+      255
+    )})`;
+
+    this.container = document.querySelector(".container");
+    this.container.innerHTML = "";
+    // this.container.className = "";
+
+    this.createShape(this.container);
+    // setTimeout(() => {
+    //   this.container.innerHTML = 'Нажми на меня правой кнопкой мыши'
+    //   this.container.classList.remove()
+    // }, 2000)
+  }
+
+  createShape() {
     const shapes = [
       "square",
       "rectangle",
@@ -33,30 +51,15 @@ export class ShapeModule extends Module {
       "heart",
     ];
 
-    this.container.classList.add(shapes[random(0, shapes.length - 1)]);
-    // this.container.style.display = "block";
-    // this.container.style.position = `absolute`;
-    this.container.style.zIndex = -1;
-    // if (!this.container.style.background) {
-      // this.container.style.background = `${randomColor}`;
-    // }
-    // if (!this.container.style.color) {
-    this.container.style.color = `${randomColor}`;
-    // }
-    // if (this.container.style.borderColor) {
-    // this.container.style.borderColor = `${randomColor}`;
-    // }
-
-    this.container.style.width = `${random(100, 300)}`;
-    this.container.style.height = `${random(100, 300)}`;
+    const newShape = document.createElement('div')
+    newShape.classList.add(shapes[random(0, shapes.length - 1)]);
+    newShape.style.position = `absolute`;
 
     const windowInnerWidth = window.innerWidth;
     const windowInnerHeight = window.innerHeight;
-    this.container.style.top = `${random(0, windowInnerHeight)}px`;
-    // this.container.style.bottom = `${random(0, windowInnerHeight)}px`;
-    this.container.style.right = `${random(0, windowInnerWidth)}px`;
-    // this.container.style.left = `${random(0, windowInnerWidth)}px`;
-    
-    document.body.append(this.container);
+    newShape.style.top = `${random(0, windowInnerHeight)}px`;
+    newShape.style.right = `${random(0, windowInnerWidth)}px`;
+
+    document.body.append(newShape);
   }
 }
