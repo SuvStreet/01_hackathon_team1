@@ -169,3 +169,25 @@ button {
   border-color: #eee;
   padding: 10px;
 }
+
+.modalActive {
+  padding: 20px 25px;
+}
+
+.modalActive_item {
+  position: absolute;
+  width: 350px;
+  height: 200px;
+  top: calc(50% - 250px);
+  left: calc(50% - 175px);
+  border-radius: 15px;
+  background-color: black;
+  cursor: default;
+  padding: 40px 20px;
+  font-size: 1rem;
+  color: white;
+}
+
+.modalActive_list {
+  margin: 10px 0 12px 0;
+}
