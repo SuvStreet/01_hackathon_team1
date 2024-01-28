@@ -1,84 +1,54 @@
 import { Module } from '../core/module'
 
 export class ClicksModule extends Module {
-	constructor(type, text) {
-		super(type, text)
-		this.oneClick = 0
-		this.dblClick = 0
-	}
+  constructor(type, text) {
+    super(type, text)
 
-	trigger() {
-      this.clickListener()
-		//this.counter()
-		//this.render()
-	}
+    this.oneClick = 0
+    this.dblClick = 0
+  }
 
-	counter(method) {
-		//let oneCounter = null
-		//let oneClick = 0
-		//let dblClick = 0
-		console.log(method)
+  trigger() {
+    this.counter()
+  }
 
-		setTimeout(() => {
-			if (method === 'click') {
-				//console.log('oneClick', this.oneClick)
-				this.oneClick += 1
-			} else {
-				//console.log('dblClick', this.dblClick)
-				this.dblClick += 1
-			}
+  counter() {
+    document.body.addEventListener('click', (event) => {
+      if(event.detail === 1) {
+        this.oneClick += 1
+      }
 
-			this.render()
-		}, 3000)
+      // if(event.button === 2) {
+      //   console.log('event.button === 2')
+      //   document.querySelector('#menu').classList.toggle('open')
+      // }
+    })
 
-		//if (method === 'click') {
-		//	setTimeout(() => {
-		//		oneClick += 1
-		//		console.log('oneClick', oneClick)
-		//	}, 3000)
-		//} else {
-		//	setTimeout(() => {
-		//		dblClick += 1
-		//		console.log('dblClick', dblClick)
-		//	}, 3000)
-		//}
-	}
+    document.body.addEventListener('dblclick', (event) => {
+        this.oneClick -= 1
+        this.dblClick += 1
+      }
+    )
+    
+    setTimeout(() => {
+      this.render()
+    }, 3000)
+  }
 
-	clickListener() {
-		document.body.addEventListener('click', event => {
-			console.log(event.detail)
-			if (event.detail === 1) {
-				this.counter('click')
-			}
-		})
+  render() {
+    const titleModal = document.createElement('div')
+    titleModal.className = 'modalActive_item'
+    titleModal.textContent = 'Колличество Ваших кликов:'
 
-		document.body.addEventListener(
-			'dblclick',
-			event => {
-				//clearTimeout(oneCounter)
-				//oneCounter = setTimeout(() => {
-				//	dblClick += 1
-				//	console.log('dblClick', dblClick)
-				this.counter('dblclick')
-			},
-			3000
-		)
-	}
+    const itemOneLeftClicks = document.createElement('p')
+    itemOneLeftClicks.className = 'modalActive_list'
+    itemOneLeftClicks.textContent = `Количество одиночных кликов: ${this.oneClick}`
 
-	render() {
-		const titleModal = document.createElement('div')
-		titleModal.className = 'modalActive_item'
-		titleModal.textContent = 'Колличество Ваших кликов:'
+    const itemTwoLeftClicks = document.createElement('p')
+    itemTwoLeftClicks.className = 'modalActive_list'
+    itemTwoLeftClicks.textContent = `Количество двойных кликов: ${this.dblClick}`
 
-		const itemOneLeftClicks = document.createElement('p')
-		itemOneLeftClicks.className = 'modalActive_list'
-		itemOneLeftClicks.textContent = `Количество одиночных кликов: ${this.oneClick}`
-
-		const itemTwoLeftClicks = document.createElement('p')
-		itemTwoLeftClicks.className = 'modalActive_list'
-		itemTwoLeftClicks.textContent = `Количество двойных кликов: ${this.dblClick}`
-
-		titleModal.append(itemOneLeftClicks, itemTwoLeftClicks)
-		document.body.append(titleModal)
-	}
+    titleModal.append(itemOneLeftClicks, itemTwoLeftClicks)
+    document.body.append(titleModal)
+  }
 }

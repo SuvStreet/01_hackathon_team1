@@ -27,7 +27,6 @@ export class ContextMenu extends Menu {
 			this.menu.style.top = `${event.clientY}px`
 			this.menu.style.left = `${event.clientX}px`
 			this.add()
-			this.close()
 		})
 
 		this.menu.addEventListener('click', event => {
@@ -35,14 +34,12 @@ export class ContextMenu extends Menu {
 			ArrayOfModules.find(
 				module => module.type === event.target.dataset.type
 			).trigger()
-			this.menu.classList.remove('open')
+			this.close()
 		})
 	}
 
 	close() {
-		this.el.addEventListener('click', () => {
-			this.menu.classList.remove('open')
-		})
+		this.menu.classList.remove('open')
 	}
 
 	add() {
