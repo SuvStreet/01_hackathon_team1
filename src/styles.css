@@ -112,12 +112,14 @@ body {
 }
 
 .timerModal {
-  font-size: 1rem;
+  font-size: 2rem;
   right: 0;
   bottom: 0;
   position: fixed;
-  width: 200px;
-  height: 75px;
+  /* width: 200px;
+  height: 75px; */
+  width: 20rem;
+  height: 10rem;
   margin-bottom: 10px;
   margin-right: 10px;
   border-style: solid;
@@ -132,7 +134,7 @@ body {
 .modalText {
   position: absolute;
   left: 0;
-  top: 0;
+  top: 2rem;
   bottom: 0;
   right: 0;
   margin: auto;
@@ -151,8 +153,8 @@ body {
 img {
   width: 15px;
   height: 15px;
-  top: 0;
-  right: 0;
+  top: 5px;
+  right: 5px;
   position: absolute;
   z-index: 999;
   padding-right: 5px;
