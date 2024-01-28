@@ -65,25 +65,7 @@ body {
   color: white;
 }
 
-.timer {
-  font-size: 1rem;
-  background-color: #1b1a1a;
-  height: 200px;
-  width: 300px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  margin: auto;
-  padding: 30px 10px;
-  display: flex;
-  justify-content: space-around;
-  border-radius: 15px;
-  border-color: black;
-  border-style: solid;
-  color: #eee;
-}
+/* ===== module|timer ===== */
 
 #input {
   padding-top: 25%;
@@ -111,17 +93,13 @@ body {
   opacity: 0;
 }
 
-.timerModal {
+.activeTimer {
   font-size: 2rem;
-  right: 0;
-  bottom: 0;
+  right: 2rem;
+  bottom: 2rem;
   position: fixed;
-  /* width: 200px;
-  height: 75px; */
   width: 20rem;
   height: 10rem;
-  margin-bottom: 10px;
-  margin-right: 10px;
   border-style: solid;
   border-radius: 15px;
   background-color: #1b1a1a;
@@ -153,12 +131,10 @@ body {
 img {
   width: 15px;
   height: 15px;
-  top: 5px;
-  right: 5px;
+  top: 10px;
+  right: 10px;
   position: absolute;
   z-index: 999;
-  padding-right: 5px;
-  padding-top: 5px;
 }
 
 img :hover {
